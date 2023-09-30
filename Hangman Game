@@ -1,0 +1,32 @@
+import java.util.Scanner;
+
+public class HangmanGame {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] words = {"terminator", "banana", "computer", "cow", "rain", "water"};
+        String word = words[(int) (Math.random() * words.length)];
+        String asterisk = new String(new char[word.length()]).replace("\0", "*");
+        int count = 0;
+        while (count < 5 && asterisk.contains("*")) {
+            System.out.println("Guess any letter in the word:");
+            System.out.println(asterisk);
+            String guess = sc.next();
+            if (guess.length() != 1) {
+                System.out.println("Enter only a single letter.");
+            } else {
+                count++;
+                for (int i = 0; i < word.length(); i++) {
+                    if (word.charAt(i) == guess.charAt(0)) {
+                        asterisk = asterisk.substring(0, i) + guess.charAt(0) + asterisk.substring(i + 1);
+                    }
+                }
+            }
+        }
+        sc.close();
+        if (asterisk.contains("*")) {
+            System.out.println("You have exhausted all your trials. The word was " + word);
+        } else {
+            System.out.println("Congratulations! You guessed the word.");
+        }
+    }
+}
